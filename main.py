@@ -3,11 +3,9 @@ from bottle import (get, post, redirect, request, route, run, static_file, error
                     template)
 import utils
 
-# Static Routes
-
-# @error(404)
-# def page_not_found(error):
-#     return static_file('404.tpl', root='./templates')
+@error(404)
+def page_not_found(error):
+    return static_file('404.tpl', root='')
 
 @get("/js/<filepath:re:.*\.js>")
 def js(filepath):
@@ -32,9 +30,10 @@ def browse():
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
 
 @route('/search')
-def browse():
+def search():
     sectionTemplate = "./templates/search.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
+
 
 if __name__ == "__main__":
     run(host='localhost', port=os.environ.get('PORT', 5000))
