@@ -1,9 +1,13 @@
 import os
-from bottle import (get, post, redirect, request, route, run, static_file,
+from bottle import (get, post, redirect, request, route, run, static_file, error,
                     template)
 import utils
 
 # Static Routes
+
+# @error(404)
+# def page_not_found(error):
+#     return static_file('404.tpl', root='./templates')
 
 @get("/js/<filepath:re:.*\.js>")
 def js(filepath):
