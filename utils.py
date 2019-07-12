@@ -7,19 +7,23 @@ AVAILABE_SHOWS = ["7", "66", "73", "82", "112", "143", "175", "216", "1371", "18
 def getVersion():
     return "0.0.1"
 
+
 def getShows():
     shows = []
     for show in AVAILABE_SHOWS:
         shows.append(json.loads(getJsonFromFile(show)))
-    # print(type(shows))
     return shows
+
 
 def displayShow(show):
     return json.loads(getJsonFromFile(show))
 
-#Doesnt lead anywhere
-# def displayEpisodes(episode):
-#     return json.loads(getJsonFromFile(episode))
+
+def displayEpisode(showid, episodeid):
+    show_data = json.loads(getJsonFromFile(showid))
+    for episode in show_data['_embedded']['episodes']:
+        if episode['id'] == int(episodeid):
+            return episode
 
 
 def getJsonFromFile(showName):

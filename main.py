@@ -38,16 +38,31 @@ def browse():
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
 
 
-@route('/ajax/show/<showname>')
-def display_show(showname):
-    sectionData = utils.displayShow(showname)
+@route('/ajax/show/<showid>')
+def display_show(showid):
+    sectionData = utils.displayShow(showid)
     return template("./templates/show.tpl", result=sectionData)
 
-@route('/show/<showname>')
-def display_show(showname):
+
+@route('/show/<showid>')
+def display_show(showid):
     sectionTemplate = "./templates/show.tpl"
-    sectionData = utils.displayShow(showname)
+    sectionData = utils.displayShow(showid)
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
+
+
+@route('/ajax/show/<showid>/episode/<episodeid>')
+def display_episode(showid, episodeid):
+    sectionData = utils.displayEpisode(showid, episodeid)
+    return template("./template/episode.tpl", result=sectionData)
+
+
+@route('/show/<showid>/episode/<episodeid>')
+def display_episode(showid, episodeid):
+    sectionTemplate = "./templates/episode.tpl"
+    sectionData = utils.displayShow(showid, episodeid)
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
+
 
 @route('/search')
 def search():
