@@ -68,12 +68,16 @@ def search_shows():
 def display_episode(showname, episodenum):
     sectionTemplate = "./templates/episode.tpl"
     sectionData = utils.displayEp(showname, episodenum)
+    if sectionData == 'error':
+        return error(error)
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={sectionData})
 
 
 @route('/ajax/show/<showname>/episode/<episodenum>')
 def display_episode(showname, episodenum):
     sectionData = utils.displayEp(showname, episodenum)
+    if sectionData == 'error':
+        return error(error)
     return template("./templates/episode.tpl", result=sectionData)
 
 

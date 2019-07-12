@@ -26,6 +26,7 @@ def displayEp(showname, episodenum):
     for episode in show_data['_embedded']['episodes']:
         if episode['id'] == int(episodenum):
             return episode
+    return 'error'
 
 
 def getJsonFromFile(showName):
