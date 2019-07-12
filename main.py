@@ -40,12 +40,17 @@ def browse():
 
 @route('/ajax/show/<showname>')
 def display_show(showname):
+    sectionData = utils.displayShow(showname)
+    return template("./templates/show.tpl", result=sectionData)
+
+@route('/show/<showname>')
+def display_show(showname):
     sectionTemplate = "./templates/show.tpl"
     sectionData = utils.displayShow(showname)
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
 
 
-@route("/search")
+@route('/search')
 def search():
     sectionTemplate = "./templates/search.tpl"
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData = {})
