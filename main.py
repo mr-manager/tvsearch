@@ -1,6 +1,5 @@
 import os
-from bottle import (get, post, redirect, request, route, run, static_file, error,
-                    template)
+from bottle import (get, post, request, route, run, static_file, error, template)
 import utils
 
 
@@ -43,6 +42,7 @@ def display_show(showname):
     sectionData = utils.displayShow(showname)
     return template("./templates/show.tpl", result=sectionData)
 
+
 @route('/show/<showname>')
 def display_show(showname):
     sectionTemplate = "./templates/show.tpl"
@@ -53,7 +53,7 @@ def display_show(showname):
 @route('/search')
 def search():
     sectionTemplate = "./templates/search.tpl"
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData = {})
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
 
 
 @post('/search')
@@ -61,7 +61,20 @@ def search_shows():
     q = request.POST.get("q")
     search_results = utils.searchResults(q)
     sectionTemplate = "./templates/search_result.tpl"
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData = {}, results=search_results, query=q)
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={}, results=search_results, query=q)
+
+
+@route('/show/<showname>/episode/<episodenum>')
+def display_episode(showname, episodenum):
+    sectionTemplate = "./templates/episode.tpl"
+    sectionData = utils.displayEp(showname, episodenum)
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={sectionData})
+
+
+@route('/ajax/show/<showname>/episode/<episodenum>')
+def display_episode(showname, episodenum):
+    sectionData = utils.displayEp(showname, episodenum)
+    return template("./templates/episode.tpl", result=sectionData)
 
 
 if __name__ == "__main__":
