@@ -14,16 +14,11 @@ def getShows():
     shows = []
     for show in AVAILABE_SHOWS:
         shows.append(json.loads(getJsonFromFile(show)))
-    # print(type(shows))
     return shows
 
 
 def displayShow(show):
     return json.loads(getJsonFromFile(show))
-
-#Doesnt lead anywhere
-# def displayEpisodes(episode):
-#     return json.loads(getJsonFromFile(episode))
 
 
 def getJsonFromFile(showName):
@@ -33,49 +28,32 @@ def getJsonFromFile(showName):
         return "{}"
 
 
-def getEpisodes():
-    # episodes = []
-    shows = getShows()
-    for show in shows:
-        # foor loop prints a list of dictionaries of episodes
-        print("in for loop")
-        print((show['_embedded']['episodes']))
-    #     get shows function prints only one list of dictionaries ((black mirror only)) -
-    #     here I actually need to print each one in the for loop into a list - issue then
-    # is how to access the keys in the dictionaries in the list.
-    print('getshowsfunction:')
-    print(show['_embedded']['episodes'])
-    # print(type(episodes))
-    return show['_embedded']['episodes']
-
-
-# this get names function literally doe sthe same as the query function except prints directly into a list
-def getNames():
-    names = []
-    episodes = getEpisodes()
-    for episode in episodes:
-        names.append(episode['name'])
-    # print(type(names))
-    print('names:')
-    print(names)
-    return names
+# I would rather use this as a separate function instead of in the search results func
+# def getEpisodes():
+#     shows = getShows()
+#     for show in shows:
+#         episodes = show['_embedded']['episodes']
+#     return episodes
 
 
 def searchResults(query):
-    episodes = getNames()
-    for name in episodes:
-        # if statement is incorrect
-        if name is query:
-            print(query)
-        #query prints single episodes for each (loops)
-        print('query:')
-        print(query)
-        print(name)
-    #     episodes: prints list of black mirror episodes
-    print('episodes:')
-    print(episodes)
-    print(type(episodes))
-    return episodes
+    search_result = []
+    shows = getShows()
+    for show in shows:
+        episodes = show['_embedded']['episodes']
+        for episode in episodes:
+            if query in episode['name']:
+                result_info = {
+                    'showid': show['id'],
+                    'episodeid': episode['id'],
+                    'text': episode['name'] + ": " + episode['name']
+                }
+                search_result.append(result_info)
+            elif query in str(episode['summary']):
+                search_result.append(result_info)
+    print(search_result)
+    return search_result
 
 
+searchResults('The National Anthem')
 
