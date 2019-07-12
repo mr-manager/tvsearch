@@ -45,7 +45,7 @@ def searchResults(query):
                 result_info = {
                     'showid': show['id'],
                     'episodeid': episode['id'],
-                    'text': episode['name'] + ": " + episode['name']
+                    'text': show['name'] + ": " + episode['name']
                 }
                 search_result.append(result_info)
             elif query in str(episode['summary']):
