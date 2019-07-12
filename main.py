@@ -10,6 +10,7 @@ def error(error):
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=error_template, sectionData={})
 
 
+
 @get("/js/<filepath:re:.*\.js>")
 def js(filepath):
     return static_file(filepath, root="./js")
@@ -42,6 +43,7 @@ def browse():
 def display_show(showname):
     sectionData = utils.displayShow(showname)
     return template("./templates/show.tpl", result=sectionData)
+
 
 @route('/show/<showname>')
 def display_show(showname):
