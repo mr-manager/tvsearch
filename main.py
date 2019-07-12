@@ -58,7 +58,7 @@ def search():
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData = {})
 
 
-@post("/search")
+@post('/search')
 def search_shows():
     q = request.POST.get("q")
     search_results = utils.searchResults(q)

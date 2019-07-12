@@ -11,10 +11,19 @@ def getShows():
     shows = []
     for show in AVAILABE_SHOWS:
         shows.append(json.loads(getJsonFromFile(show)))
+    # print(type(shows))
     return shows
+
 
 def displayShow(show):
     return json.loads(getJsonFromFile(show))
+
+
+def displayEpisode(showid, episodeid):
+    show_data = json.loads(getJsonFromFile(showid))
+    for episode in show_data['_embedded']['episodes']:
+        if episode['id'] == int(episodeid):
+            return episode
 
 
 def getJsonFromFile(showName):
