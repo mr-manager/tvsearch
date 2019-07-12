@@ -38,69 +38,30 @@ def browse():
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
 
 
-@route('/ajax/show/<showid>')
-def display_show(showid):
-    sectionData = utils.displayShow(showid)
+@route('/ajax/show/<showname>')
+def display_show(showname):
+    sectionData = utils.displayShow(showname)
     return template("./templates/show.tpl", result=sectionData)
 
-
-@route('/show/<showid>')
-def display_show(showid):
+@route('/show/<showname>')
+def display_show(showname):
     sectionTemplate = "./templates/show.tpl"
-    sectionData = utils.displayShow(showid)
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
-
-
-@route('/ajax/show/<showid>/episode/<episodeid>')
-def display_episode(showid, episodeid):
-    sectionData = utils.displayEpisode(showid, episodeid)
-    return template("./template/episode.tpl", result=sectionData)
-
-
-@route('/show/<showid>/episode/<episodeid>')
-def display_episode(showid, episodeid):
-    sectionTemplate = "./templates/episode.tpl"
-    sectionData = utils.displayShow(showid, episodeid)
+    sectionData = utils.displayShow(showname)
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
 
 
 @route('/search')
 def search():
     sectionTemplate = "./templates/search.tpl"
-
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData={})
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData = {})
 
 
 @post('/search')
 def search_shows():
-    query = request.forms.get('q')
+    q = request.POST.get("q")
+    search_results = utils.searchResults(q)
     sectionTemplate = "./templates/search_result.tpl"
-    sectionData = utils.searchResults(query)
-    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
-
-# something tarek showed me but its not efficient at all.
-# @route('/search', method="post")
-# def test():
-#
-#     name_search = request.forms.get("q")
-#     string_search=  (str.split(name_search))
-#     display_shows = [json.loads(utils.getJsonFromFile(someshows)) for someshows in utils.AVAILABE_SHOWS]
-#     m = display_shows[0]
-#     y = m["name"]
-#     k=m["summary"]
-#     x=[m]
-#     t=x[0]['_embedded']['episodes'][0]
-#     print(t)
-#
-#     string_search2 = (str.split(y))
-#     string_search3 = (str.split(k))
-#     for r in string_search:
-#
-#         for k in string_search2  :
-#             if r == k:
-#                 print(r)
-#                 print(k)
-#                 return "hey"
+    return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData = {}, results=search_results, query=q)
 
 
 if __name__ == "__main__":
