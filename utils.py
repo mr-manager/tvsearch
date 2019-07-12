@@ -31,7 +31,6 @@ def getJsonFromFile(showName):
 #         episodes = show['_embedded']['episodes']
 #     return episodes
 
-
 def searchResults(query):
     search_result = []
     shows = getShows()
