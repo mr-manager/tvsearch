@@ -1,17 +1,19 @@
-from bottle import template, request
+from bottle import template
 import json
+
 
 JSON_FOLDER = './data'
 AVAILABE_SHOWS = ["7", "66", "73", "82", "112", "143", "175", "216", "1371", "1871","2993", "305"]
 
+
 def getVersion():
     return "0.0.1"
+
 
 def getShows():
     shows = []
     for show in AVAILABE_SHOWS:
         shows.append(json.loads(getJsonFromFile(show)))
-    # print(type(shows))
     return shows
 
 
@@ -19,10 +21,10 @@ def displayShow(show):
     return json.loads(getJsonFromFile(show))
 
 
-def displayEpisode(showid, episodeid):
-    show_data = json.loads(getJsonFromFile(showid))
+def displayEp(showname, episodenum):
+    show_data = json.loads(getJsonFromFile(showname))
     for episode in show_data['_embedded']['episodes']:
-        if episode['id'] == int(episodeid):
+        if episode['id'] == int(episodenum):
             return episode
 
 
@@ -32,13 +34,6 @@ def getJsonFromFile(showName):
     except:
         return "{}"
 
-
-# I would rather use this as a separate function instead of in the search results func
-# def getEpisodes():
-#     shows = getShows()
-#     for show in shows:
-#         episodes = show['_embedded']['episodes']
-#     return episodes
 
 def searchResults(query):
     search_result = []
@@ -57,7 +52,4 @@ def searchResults(query):
                 search_result.append(result_info)
     print(search_result)
     return search_result
-
-
-searchResults('The National Anthem')
 
