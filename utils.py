@@ -16,9 +16,6 @@ def getShows():
 def displayShow(show):
     return json.loads(getJsonFromFile(show))
 
-def displayEpisodes(episode):
-    return json.loads(getJsonFromFile(episode))
-
 def getJsonFromFile(showName):
     try:
         return template("{folder}/{filename}.json".format(folder=JSON_FOLDER, filename=showName))
