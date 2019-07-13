@@ -40,6 +40,8 @@ def browse():
 @route('/ajax/show/<showname>')
 def display_show(showname):
     sectionData = utils.displayShow(showname)
+    if sectionData == 'error':
+        return error(error)
     return template("./templates/show.tpl", result=sectionData)
 
 
@@ -47,6 +49,8 @@ def display_show(showname):
 def display_show(showname):
     sectionTemplate = "./templates/show.tpl"
     sectionData = utils.displayShow(showname)
+    if sectionData == 'error':
+        return error(error)
     return template("./pages/index.html", version=utils.getVersion(), sectionTemplate=sectionTemplate, sectionData=sectionData)
 
 
