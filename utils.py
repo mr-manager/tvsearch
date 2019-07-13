@@ -18,7 +18,9 @@ def getShows():
 
 
 def displayShow(show):
-    return json.loads(getJsonFromFile(show))
+    if show in AVAILABE_SHOWS:
+        return json.loads(getJsonFromFile(show))
+    return 'error'
 
 
 def displayEp(showname, episodenum):
